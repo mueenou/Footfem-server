@@ -11,25 +11,16 @@ module.exports = {
       let description = req.body.description;
       let matchId = req.body.description;
       let comment_author = req.body.comment_author;
+      let date = req.body.date;
 
-      if(description === null || comment_author === null) {
-          return res.status(400).json({ 'error': 'invalid parameters' });
-      }
-
-      if(description > CONTENT_LIMIT) {
-          return res.status(400).json({ 'error': 'number of characters exceeded (1000)' });
-      }
-
-      let newComment = models.Comment.create({
+      models.Comment.create({
+         description: description,
           matchId: matchId,
-          description: description,
           comment_author: comment_author,
+          date: date,
       })
-          .then(function (newComment) {
-              return res.status(200).json({'description': newComment.description});
-          })
           .catch(function (err) {
-              return res.status(500).json({ 'error': 'unable to read comment' });
+              return res.status(400).json({'error': 'cannot create comment' });
           })
   }
 

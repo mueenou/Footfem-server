@@ -2,6 +2,7 @@
 let express = require('express');
 let usersCtrl = require('./routes/usersController');
 let commentController = require('./routes/commentController');
+let pronosticController = require('./routes/pronosticController');
 
 // Router
 exports.router = (function () {
@@ -16,6 +17,10 @@ exports.router = (function () {
     // Comment routes
     apiRouter.route('/comments/new/').post(commentController.createComment);
     // apiRouter.route('/comments/').get(commentController.listComments);
+
+    // Pronostic routes
+    apiRouter.route('/pronostics/new').post(pronosticController.createPronostic);
+    apiRouter.route('/pronostics/').get(pronosticController.listPronostic);
 
     return apiRouter;
 })();
