@@ -20,6 +20,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      matchId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,

@@ -4,12 +4,13 @@ module.exports = (sequelize, DataTypes) => {
     datetime: DataTypes.DATE,
     isFavorite: DataTypes.BOOLEAN,
     venue: DataTypes.STRING,
+    matchId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER
   }, {});
   MatchNotification.associate = function(models) {
     // associations can be defined here
       models.MatchNotification.belongsTo(models.User, {
-        foreignKay: {
+        foreignKey: {
           allowNull: false,
         }
       })

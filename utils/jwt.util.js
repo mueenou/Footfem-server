@@ -28,5 +28,17 @@ module.exports = {
             } catch (err) { }
             return userId;
         }
+    },
+    getUserName: function (authorization) {
+        let userName = null;
+        let token = module.exports.parseAuthorization(authorization);
+        if(token != null) {
+            try {
+                let jwtToken = jwt.verify(token, JWT_SIGN_SECRET);
+                if(jwtToken != null) userName = jwtToken.username;
+            } catch (err) {
+                return userName;
+            }
+        }
     }
 };

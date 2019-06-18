@@ -2,6 +2,7 @@
 let models = require('../models');
 let asyncLib = require('async');
 let jwtUtils = require('../utils/jwt.util');
+let sequelize = require('sequelize');
 
 
 module.exports = {
@@ -14,6 +15,7 @@ module.exports = {
         let home_team = req.body.home_team;
         let away_team = req.body.away_team;
         let pronostic = req.body.pronostic;
+        let result = req.body.result;
 
         asyncLib.waterfall([
            function (done) {
@@ -33,6 +35,8 @@ module.exports = {
                         home_team: home_team,
                         away_team: away_team,
                         pronostic: pronostic,
+                        result: result,
+
                         UserId: userFound.id,
                     })
                         .then(function (newPronostic) {
@@ -52,20 +56,9 @@ module.exports = {
 
     },
     listPronostic: function (req, res) {
-        let fields = req.query.fields;
-        let limit = parseInt(req.query.limit);
-        let offset = parseInt(req.query.offset);
-        let order = req.query.order;
-
-        models.Pronostic.findAll({
-            order: order,
-            attributes: null,
-            limit: (!isNaN(limit)) ? limit : null,
-            offset: (!isNaN(offset)) ? offset : null,
-            include: [{
-                model: models.User,
-                attributes: ['username']
-            }]
+        let user = req.params.user;
+        models.sequelize.query(`SELECT p.home_team, p.away_team, p.pronostic, p.result FROM pronostics p,users u WHERE u.username = '${user}' AND userId = u.id`, {
+            model: models.Pronostic,
         })
             .then(function (pronostics) {
                 if (pronostics) {
@@ -78,6 +71,12 @@ module.exports = {
                 console.log(err);
                 res.status(500).json({ 'error': 'invalid fields' });
             })
+    },
+    deletePronostic: function (req, res) {
+        return {
+            delete: models.Pronostic.destroy({where: {id: req.params.id}}),
+            response: res.status(200).json({'success': 'deleted'})
+        }
     }
 
 };
