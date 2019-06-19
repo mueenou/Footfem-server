@@ -1,10 +1,14 @@
 // Imports
 let express = require('express');
+let cors = require('cors');
 let bodyParser = require('body-parser');
 let apiRouter = require('./apiRouter').router;
 
 // Instantiate server
 let server = express();
+
+// Allors CORS
+server.use(cors());
 
 // Body Parser Configuration
 server.use(bodyParser.urlencoded({ extended: true }));

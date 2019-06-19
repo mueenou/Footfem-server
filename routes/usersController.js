@@ -19,7 +19,7 @@ module.exports = {
         let password = req.body.password;
         let team = req.body.team;
 
-        if(firstname == null || lastname == null || username == null || email == null || password == null) {
+        if(firstname == null || lastname == null || username == null || email == null || password == null || team == null) {
             return res.status(400).json({ 'error': 'missing parameters' });
         }
 
