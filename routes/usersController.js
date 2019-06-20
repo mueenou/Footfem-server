@@ -40,7 +40,7 @@ module.exports = {
         }
 
         if(!PASSWORD_REGEX.test(password)) {
-            return res.status(400).json({ 'error': 'invalid password (must be between 4-8 characters and include atleast 1 number' });
+            return res.status(400).json({ 'error': 'invalid password (must be between 4-8 characters and include atleast 1 number)' });
         }
 
         models.User.findOne({
@@ -90,7 +90,7 @@ module.exports = {
         }
 
         if(!PASSWORD_REGEX.test(password)) {
-            return res.status(400).json({ 'error': 'invalid password (must be between 4-8 characters and include atleast 1 number' });
+            return res.status(400).json({ 'error': 'invalid password (must be between 4-8 characters and include atleast 1 number)' });
         }
 
         models.User.findOne({
