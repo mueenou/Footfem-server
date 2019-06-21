@@ -61,7 +61,7 @@ module.exports = {
                         })
                             .then(function (newUser) {
                                 return res.status(201).json({
-                                    'userId': newUser.id
+                                    'userId': newUser.id,
                                 })
                             })
                             .catch(function (err) {
@@ -97,12 +97,19 @@ module.exports = {
             where: { email: email }
         })
             .then(function (userFound) {
+                let {id, firstname, lastname, isAdmin, email, team } = userFound
                 if (userFound) {
                     bcrypt.compare(password, userFound.password, function (errBcrypt, resBcrypt) {
                         if(resBcrypt) {
                             return res.status(200).json({
-                                'userId': userFound.id,
+                                'userId': id,
+                                'firstname': firstname,
+                                'lastname': lastname,
+                                'email': email,
+                                'team': team,
+                                'isAdmin': isAdmin,
                                 'token': jwtUtils.generateTokenForUser(userFound),
+                                
                             });
                         } else {
                             return res.status(403).json({ 'error': 'invalid password' });
