@@ -41,7 +41,7 @@ module.exports = {
                             done(newNotification);
                         });
                 } else {
-                    return res.status(404).json({'error': 'user not found'});
+                    return res.status(404).json({'error': 'user is not logged in'});
                 }
             }
         ], function (newNotification) {

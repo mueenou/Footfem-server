@@ -97,7 +97,7 @@ module.exports = {
             where: { email: email }
         })
             .then(function (userFound) {
-                let {id, firstname, lastname, isAdmin, email, team } = userFound
+                let {id, firstname, lastname, isAdmin, email, team, username } = userFound
                 if (userFound) {
                     bcrypt.compare(password, userFound.password, function (errBcrypt, resBcrypt) {
                         if(resBcrypt) {
@@ -105,6 +105,7 @@ module.exports = {
                                 'userId': id,
                                 'firstname': firstname,
                                 'lastname': lastname,
+                                'username': username,
                                 'email': email,
                                 'team': team,
                                 'isAdmin': isAdmin,
