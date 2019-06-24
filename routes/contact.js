@@ -1,49 +1,50 @@
 let config = require('../utils/config');
+let nodemailer = require('nodemailer');
+let authMailer = require('./creds');
+let template = require('../templateEmail/template');
 
-const nodemailer = require("nodemailer");
+console.log(__dirname);
 
 module.exports = {
-  
-  sendMessage: async (req, res) => {
+  sendMessage: async (req, res, express) => {
 
-    console.log(JSON.stringify(req.body));
-    /*let firstName = req.body.firstName;
+  //  console.log(JSON.stringify(req.body));
+
+    let firstName = req.body.firstName;
     let lastName = req.body.lastName;
     let email = req.body.email;
-    let message = req.body.message;*/
+    let message = req.body.message;
 
-    // create reusable transporter object using the default SMTP transport
-    
-
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
       auth: {
-        type: 'OAuth2',
-        ...config
+        user: authMailer.user,
+        pass: authMailer.pass
       }
     });
 
-    // setup email data with unicode symbols
-    /*let mailOptions = {
+    var mailOptions = {
       from: email,
-      to: "support@footfem.fr",
-      subject: "New message from FootFem Website !",
+      to: 'footfem.app@gmail.com',
+      subject: 'New message from FootFem web app !',
       text: message,
-      html: '<b>' + message + '</b>',
-    }*/
+      html: template.mailFormat(firstName, lastName, email, message),
+      attachments:[
+        {
+          filename: 'logo-FootFem.gif',
+          path: '../Footfem-server/templateEmail/logo-FootFem.gif',
+          cid:'logo-FootFem'
+        }
+      ]
+    };
 
-    // send mail with defined transport object
-    try {
-      const { firstName, lastName, email, message } = req.body
-      const messageContent = {
-        from: `${firstName} ${lastName} <${email}>`,
-        text: message
-      } 
-      await sendMessage(messageContent)
-  
-      console.log('done');
-    } catch (error) {
-      console.log('error', error);
-    }
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
   }
 }
