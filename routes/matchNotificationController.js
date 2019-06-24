@@ -20,7 +20,7 @@ module.exports = {
             function (done) {
                 models.User.findOne({
                     where: { id: userId },
-                })
+                })  
                     .then(function (userFound) {
                         done(null, userFound);
                     })
@@ -100,7 +100,7 @@ module.exports = {
     },
     deleteNotification: function (req, res) {
         return {
-            delete: models.MatchNotification.destroy({where: {id: req.params.id}}),
+            delete: models.MatchNotification.destroy({where: {matchId: req.params.id}}),
             response: res.status(200).json({'success': 'deleted'})
         }
     }
