@@ -10,13 +10,17 @@ module.exports = {
       },
       home_team: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       away_team: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       pronostic: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      matchId: {
         allowNull: false,
         type: Sequelize.INTEGER
       },

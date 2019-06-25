@@ -16,6 +16,7 @@ module.exports = {
         let away_team = req.body.away_team;
         let pronostic = req.body.pronostic;
         let result = req.body.result;
+        let matchId = req.body.matchId;
 
         asyncLib.waterfall([
            function (done) {
@@ -36,7 +37,7 @@ module.exports = {
                         away_team: away_team,
                         pronostic: pronostic,
                         result: result,
-
+                        matchId: matchId,
                         UserId: userFound.id,
                     })
                         .then(function (newPronostic) {
@@ -57,7 +58,7 @@ module.exports = {
     },
     listPronostic: function (req, res) {
         let user = req.params.user;
-        models.sequelize.query(`SELECT p.home_team, p.away_team, p.pronostic, p.result FROM pronostics p,users u WHERE u.username = '${user}' AND userId = u.id`, {
+        models.sequelize.query(`SELECT p.matchId, p.home_team, p.away_team, p.pronostic, p.result FROM pronostics p,users u WHERE u.username = '${user}' AND userId = u.id`, {
             model: models.Pronostic,
         })
             .then(function (pronostics) {
@@ -74,7 +75,7 @@ module.exports = {
     },
     deletePronostic: function (req, res) {
         return {
-            delete: models.Pronostic.destroy({where: {id: req.params.id}}),
+            delete: models.Pronostic.destroy({where: {matchId: req.params.id}}),
             response: res.status(200).json({'success': 'deleted'})
         }
     }
