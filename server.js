@@ -17,7 +17,7 @@ server.use(bodyParser.json());
 // Configure routes
 server.get('/', function(req, res) {
     res.setHeader('Content-Type', 'text/html');
-    res.status(200).send('<h1>Bonjour sur le super serveur de Footfem</h1>');
+    res.status(200).send('<h1>Hi, welcome to FootFem Server API !</h1>');
 });
 
 server.use('/api/', apiRouter);
