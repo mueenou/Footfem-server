@@ -201,5 +201,22 @@ module.exports = {
           res.json(updatedStatusUser)
         })
         .catch(next)
+      },
+
+      listUsers: function (req, res){
+        models.sequelize.query("SELECT * FROM `users`", {
+            model: models.User,
+        })
+        .then(function (allUsers) {
+            if (allUsers) {
+                res.status(200).json(allUsers);
+            } else {
+                res.status(404).json({ 'error': 'no users found' });
+            }
+        })
+        .catch(function (err) {
+            console.log(err);
+            res.status(500).json({ 'error': 'invalid fields' });
+        })
       }
 };

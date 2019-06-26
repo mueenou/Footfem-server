@@ -16,6 +16,7 @@ exports.router = (function () {
     apiRouter.route('/users/me/').get(usersCtrl.getUserProfile);
     apiRouter.route('/users/me/').put(usersCtrl.updateUserProfile);
     apiRouter.route('/users/setAdmin/:id').put(usersCtrl.updateUserStatus);
+    apiRouter.route('/users/').get(usersCtrl.listUsers);
 
     // Comment routes
     apiRouter.route('/comments/new/').post(commentController.createComment);
