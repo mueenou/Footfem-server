@@ -110,7 +110,7 @@ module.exports = {
                                 'team': team,
                                 'isAdmin': isAdmin,
                                 'token': jwtUtils.generateTokenForUser(userFound),
-                                
+
                             });
                         } else {
                             return res.status(403).json({ 'error': 'invalid password' });
@@ -186,5 +186,20 @@ module.exports = {
                 return res.status(500).json({ 'error': 'cannot update user profile' });
             }
         });
-    }
+    },
+
+    updateUserStatus: function (req, res, next) {
+        // Getting auth header
+        let isAdmin = req.body.isAdmin;
+        let userId = req.params.id;
+
+        models.User.update(
+          {isAdmin: req.body.isAdmin},
+          {returning: true, where: {id: userId} }
+        )
+        .then(function(updatedStatusUser) {
+          res.json(updatedStatusUser)
+        })
+        .catch(next)
+      }
 };
