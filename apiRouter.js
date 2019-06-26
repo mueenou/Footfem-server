@@ -19,7 +19,8 @@ exports.router = (function () {
     // Comment routes
     apiRouter.route('/comments/new/').post(commentController.createComment);
     apiRouter.route('/comments/match/:matchId').get(commentController.listMatchComments);
-    // apiRouter.route('/comments/').get(commentController.listComments);
+    apiRouter.route('/comments/').get(commentController.listComments);
+    apiRouter.route('/comments/delete/:id').post(commentController.deleteComment);
 
     // Pronostic routes
     apiRouter.route('/pronostics/new').post(pronosticController.createPronostic);
