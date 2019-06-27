@@ -26,9 +26,9 @@ exports.router = (function () {
 
     // Pronostic routes
     apiRouter.route('/pronostics/new').post(pronosticController.createPronostic);
-    apiRouter.route('/pronostics/').get(pronosticController.listPronostic);
     apiRouter.route('/pronostics/:user').get(pronosticController.listPronostic);
     apiRouter.route('/pronostics/delete/:id').post(pronosticController.deletePronostic);
+    apiRouter.route('/pronostics/get/all').get(pronosticController.listAllPronostics);
 
     // Notification routes
     apiRouter.route('/notifications/new').post(matchNotificationController.createNotification);

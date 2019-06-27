@@ -73,6 +73,24 @@ module.exports = {
                 res.status(500).json({ 'error': 'invalid fields' });
             })
     },
+
+    listAllPronostics: function (req, res) {
+      models.sequelize.query('SELECT p.matchId, p.home_team, p.away_team, p.pronostic, p.result, u.username FROM pronostics p,users u WHERE u.username = u.username AND userId = u.id', {
+        model: models.Pronostic,
+      })
+      .then(function(pronostics) {
+        if(pronostics) {
+          res.status(200).json(pronostics);
+        } else {
+          res.status(404).json({ 'error': 'no pronostics found' });
+        }
+      })
+      .catch(function (err) {
+        console.log(err);
+        res.status(500).son({'error': 'invalid fields'});
+      })
+    },
+
     deletePronostic: function (req, res) {
         return {
             delete: models.Pronostic.destroy({where: {matchId: req.params.id}}),
